@@ -1,0 +1,907 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>学术动画库 | 论文动画展示平台</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        :root {
+            --primary: #2c3e50;
+            --secondary: #3498db;
+            --accent: #e74c3c;
+            --light: #ecf0f1;
+            --dark: #2c3e50;
+            --gray: #95a5a6;
+            --success: #27ae60;
+            --card-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+        
+        body {
+            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+            color: #333;
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* 头部样式 */
+        header {
+            background: linear-gradient(135deg, var(--primary), #1a2530);
+            color: white;
+            padding: 1rem 0;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .logo i {
+            font-size: 2.5rem;
+            color: var(--secondary);
+            animation: pulse 2s infinite;
+        }
+        
+        .logo h1 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+        }
+        
+        .logo span {
+            color: var(--secondary);
+            font-weight: 800;
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 30px;
+        }
+        
+        nav a {
+            color: rgba(255, 255, 255, 0.9);
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            padding: 8px 15px;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        nav a:hover, nav a.active {
+            background-color: rgba(255, 255, 255, 0.1);
+            color: white;
+        }
+        
+        /* 标题区域 */
+        .hero {
+            text-align: center;
+            padding: 4rem 0 2rem;
+            background: linear-gradient(rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.7)), url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><rect width="100" height="100" fill="%23f1f3f5"/><path d="M0 50 L100 50 M50 0 L50 100" stroke="%23dee2e6" stroke-width="1"/></svg>');
+            background-size: 30px 30px;
+            margin-bottom: 2rem;
+        }
+        
+        .hero h2 {
+            font-size: 2.8rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+            font-weight: 700;
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            color: var(--gray);
+            max-width: 700px;
+            margin: 0 auto 2rem;
+            line-height: 1.8;
+        }
+        
+        .stats {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            margin-top: 2rem;
+            flex-wrap: wrap;
+        }
+        
+        .stat-card {
+            background: white;
+            padding: 20px 30px;
+            border-radius: 12px;
+            box-shadow: var(--card-shadow);
+            min-width: 180px;
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+        
+        .stat-card:hover {
+            transform: translateY(-8px);
+        }
+        
+        .stat-card i {
+            font-size: 2.5rem;
+            color: var(--secondary);
+            margin-bottom: 15px;
+        }
+        
+        .stat-card .number {
+            font-size: 2.2rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 5px;
+        }
+        
+        .stat-card .label {
+            color: var(--gray);
+            font-size: 1rem;
+        }
+        
+        /* 控制区域 */
+        .controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 2rem 0;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+        
+        .search-box {
+            display: flex;
+            background: white;
+            border-radius: 50px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            flex: 1;
+            max-width: 500px;
+        }
+        
+        .search-box input {
+            flex: 1;
+            padding: 14px 25px;
+            border: none;
+            font-size: 1rem;
+            outline: none;
+            background: transparent;
+        }
+        
+        .search-box button {
+            background: var(--secondary);
+            color: white;
+            border: none;
+            padding: 0 30px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: background 0.3s;
+        }
+        
+        .search-box button:hover {
+            background: #2980b9;
+        }
+        
+        .upload-btn {
+            background: var(--success);
+            color: white;
+            border: none;
+            padding: 14px 30px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 5px 15px rgba(39, 174, 96, 0.3);
+            transition: all 0.3s ease;
+        }
+        
+        .upload-btn:hover {
+            background: #219653;
+            transform: translateY(-3px);
+        }
+        
+        /* 分类导航 */
+        .categories {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin: 2rem 0;
+        }
+        
+        .category-btn {
+            background: white;
+            border: 2px solid #e0e0e0;
+            padding: 12px 28px;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
+        }
+        
+        .category-btn:hover, .category-btn.active {
+            background: var(--secondary);
+            color: white;
+            border-color: var(--secondary);
+            box-shadow: 0 5px 15px rgba(52, 152, 219, 0.3);
+        }
+        
+        /* 动画网格 */
+        .animation-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 30px;
+            margin: 2rem 0;
+        }
+        
+        .animation-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: var(--card-shadow);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+        
+        .animation-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+        }
+        
+        .animation-media {
+            height: 220px;
+            overflow: hidden;
+            position: relative;
+            background: #000;
+        }
+        
+        .animation-media video, 
+        .animation-media img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        
+        .animation-card:hover .animation-media video,
+        .animation-card-card:hover .animation-media img {
+            transform: scale(1.05);
+        }
+        
+        .format-badge {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: var(--accent);
+            color: white;
+            padding: 6px 15px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            z-index: 2;
+        }
+        
+        .animation-info {
+            padding: 25px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .animation-info h3 {
+            color: var(--primary);
+            margin-bottom: 12px;
+            font-size: 1.4rem;
+            line-height: 1.4;
+        }
+        
+        .paper-info {
+            color: var(--gray);
+            font-size: 0.95rem;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .paper-info i {
+            color: var(--secondary);
+        }
+        
+        .description {
+            color: #555;
+            margin-bottom: 20px;
+            flex: 1;
+        }
+        
+        .tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 20px;
+        }
+        
+        .tag {
+            background: #e1f0fa;
+            color: var(--secondary);
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 500;
+        }
+        
+        .actions {
+            display: flex;
+            justify-content: space-between;
+            margin-top: auto;
+        }
+        
+        .actions button {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 10px 22px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 500;
+        }
+        
+        .actions button:hover {
+            background: var(--secondary);
+        }
+        
+        .actions .download-btn {
+            background: var(--success);
+        }
+        
+        .actions .download-btn:hover {
+            background: #219653;
+        }
+        
+        /* 页脚 */
+        footer {
+            background: var(--dark);
+            color: white;
+            padding: 4rem 0 2rem;
+            margin-top: 4rem;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+        }
+        
+        .footer-section h3 {
+            font-size: 1.4rem;
+            margin-bottom: 20px;
+            color: var(--secondary);
+        }
+        
+        .footer-section p {
+            margin-bottom: 15px;
+            color: #bbb;
+            line-height: 1.7;
+        }
+        
+        .footer-links {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: 15px;
+        }
+        
+        .footer-links a {
+            color: #bbb;
+            text-decoration: none;
+            transition: color 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .footer-links a:hover {
+            color: var(--secondary);
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .social-links a {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            color: white;
+            transition: all 0.3s ease;
+        }
+        
+        .social-links a:hover {
+            background: var(--secondary);
+            transform: translateY(-3px);
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 30px;
+            margin-top: 40px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 0.9rem;
+        }
+        
+        /* 响应式设计 */
+        @media (max-width: 900px) {
+            .header-content {
+                flex-direction: column;
+                gap: 20px;
+            }
+            
+            nav ul {
+                gap: 10px;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            .animation-grid {
+                grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            }
+            
+            .controls {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            
+            .search-box {
+                max-width: 100%;
+            }
+        }
+        
+        @media (max-width: 600px) {
+            .animation-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .hero h2 {
+                font-size: 2.2rem;
+            }
+        }
+        
+        /* 动画效果 */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+        
+        .animation-card {
+            animation: fadeIn 0.6s ease forwards;
+            opacity: 0;
+        }
+        
+        .animation-card:nth-child(1) { animation-delay: 0.1s; }
+        .animation-card:nth-child(2) { animation-delay: 0.2s; }
+        .animation-card:nth-child(3) { animation-delay: 0.3s; }
+        .animation-card:nth-child(4) { animation-delay: 0.4s; }
+        .animation-card:nth-child(5) { animation-delay: 0.5s; }
+        .animation-card:nth-child(6) { animation-delay: 0.6s; }
+        
+        .floating {
+            animation: float 6s ease-in-out infinite;
+        }
+        
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-15px); }
+            100% { transform: translateY(0px); }
+        }
+    </style>
+</head>
+<body>
+    <!-- 头部导航 -->
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <i class="fas fa-film floating"></i>
+                    <h1>学术<span>动画库</span></h1>
+                </div>
+                <nav>
+                    <ul>
+                        <li><a href="#" class="active"><i class="fas fa-home"></i> 首页</a></li>
+                        <li><a href="#"><i class="fas fa-folder"></i> 分类浏览</a></li>
+                        <li><a href="#"><i class="fas fa-history"></i> 最近上传</a></li>
+                        <li><a href="#"><i class="fas fa-cloud-upload-alt"></i> 上传动画</a></li>
+                        <li><a href="#"><i class="fas fa-info-circle"></i> 关于</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- 标题区域 -->
+    <section class="hero">
+        <div class="container">
+            <h2>论文动画资源管理与展示平台</h2>
+            <p>集中管理、展示和分享您的学术研究中使用的动画文件（MP4/GIF），提高研究成果的可视化效果和传播效率</p>
+            
+            <div class="stats">
+                <div class="stat-card">
+                    <i class="fas fa-video"></i>
+                    <div class="number">246</div>
+                    <div class="label">动画文件</div>
+                </div>
+                <div class="stat-card">
+                    <i class="fas fa-file-alt"></i>
+                    <div class="number">128</div>
+                    <div class="label">关联论文</div>
+                </div>
+                <div class="stat-card">
+                    <i class="fas fa-users"></i>
+                    <div class="number">3.5K</div>
+                    <div class="label">访问用户</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 主要内容区域 -->
+    <main class="container">
+        <!-- 控制区域 -->
+        <div class="controls">
+            <div class="search-box">
+                <input type="text" placeholder="搜索论文标题、作者、关键词或动画描述...">
+                <button><i class="fas fa-search"></i> 搜索</button>
+            </div>
+            
+            <button class="upload-btn">
+                <i class="fas fa-cloud-upload-alt"></i> 上传新动画
+            </button>
+        </div>
+
+        <!-- 分类导航 -->
+        <div class="categories">
+            <button class="category-btn active"><i class="fas fa-layer-group"></i> 全部动画</button>
+            <button class="category-btn"><i class="fas fa-brain"></i> 人工智能</button>
+            <button class="category-btn"><i class="fas fa-eye"></i> 计算机视觉</button>
+            <button class="category-btn"><i class="fas fa-heartbeat"></i> 生物医学</button>
+            <button class="category-btn"><i class="fas fa-atom"></i> 物理模拟</button>
+            <button class="category-btn"><i class="fas fa-chart-bar"></i> 数据可视化</button>
+            <button class="category-btn"><i class="fas fa-robot"></i> 机器学习</button>
+        </div>
+
+        <!-- 动画网格 -->
+        <div class="animation-grid">
+            <!-- 动画卡片 1 -->
+            <div class="animation-card">
+                <div class="animation-media">
+                    <video autoplay loop muted playsinline>
+                        <source src="https://assets.codepen.io/3364143/screen.mp4" type="video/mp4">
+                    </video>
+                    <div class="format-badge">MP4</div>
+                </div>
+                <div class="animation-info">
+                    <h3>神经网络梯度下降可视化</h3>
+                    <div class="paper-info">
+                        <i class="fas fa-book"></i>
+                        <span>深度学习优化算法研究 (2023)</span>
+                    </div>
+                    <p class="description">展示神经网络训练过程中梯度下降的动态过程，包含损失曲面和参数更新轨迹的可视化。</p>
+                    <div class="tags">
+                        <span class="tag">AI</span>
+                        <span class="tag">深度学习</span>
+                        <span class="tag">优化算法</span>
+                    </div>
+                    <div class="actions">
+                        <button><i class="fas fa-info-circle"></i> 详情</button>
+                        <button class="download-btn"><i class="fas fa-download"></i> 下载</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 动画卡片 2 -->
+            <div class="animation-card">
+                <div class="animation-media">
+                    <img src="https://media.giphy.com/media/3o7TKwxYkeW0ZvTqsU/giphy.gif" alt="分子动力学模拟">
+                    <div class="format-badge">GIF</div>
+                </div>
+                <div class="animation-info">
+                    <h3>蛋白质折叠动力学</h3>
+                    <div class="paper-info">
+                        <i class="fas fa-book"></i>
+                        <span>分子动力学模拟 (2022)</span>
+                    </div>
+                    <p class="description">蛋白质折叠过程的分子动力学模拟动画，展示了二级结构形成和三级结构稳定的全过程。</p>
+                    <div class="tags">
+                        <span class="tag">生物医学</span>
+                        <span class="tag">分子模拟</span>
+                        <span class="tag">蛋白质</span>
+                    </div>
+                    <div class="actions">
+                        <button><i class="fas fa-info-circle"></i> 详情</button>
+                        <button class="download-btn"><i class="fas fa-download"></i> 下载</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 动画卡片 3 -->
+            <div class="animation-card">
+                <div class="animation-media">
+                    <video autoplay loop muted playsinline>
+                        <source src="https://assets.codepen.io/3364143/screen.mp4" type="video/mp4">
+                    </video>
+                    <div class="format-badge">MP4</div>
+                </div>
+                <div class="animation-info">
+                    <h3>流体动力学模拟</h3>
+                    <div class="paper-info">
+                        <i class="fas fa-book"></i>
+                        <span>计算流体力学研究 (2023)</span>
+                    </div>
+                    <p class="description">基于Navier-Stokes方程的流体动力学仿真，展示不同雷诺数下的湍流形成和涡旋结构。</p>
+                    <div class="tags">
+                        <span class="tag">物理模拟</span>
+                        <span class="tag">CFD</span>
+                        <span class="tag">数值模拟</span>
+                    </div>
+                    <div class="actions">
+                        <button><i class="fas fa-info-circle"></i> 详情</button>
+                        <button class="download-btn"><i class="fas fa-download"></i> 下载</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 动画卡片 4 -->
+            <div class="animation-card">
+                <div class="animation-media">
+                    <img src="https://media.giphy.com/media/3o7TKsQ8UQ4l4LhGz6/giphy.gif" alt="数据可视化">
+                    <div class="format-badge">GIF</div>
+                </div>
+                <div class="animation-info">
+                    <h3>全球气温变化可视化</h3>
+                    <div class="paper-info">
+                        <i class="fas fa-book"></i>
+                        <span>气候数据分析 (2022)</span>
+                    </div>
+                    <p class="description">过去100年全球气温变化趋势的时空可视化，使用热力图展示不同区域的变暖速率差异。</p>
+                    <div class="tags">
+                        <span class="tag">数据可视化</span>
+                        <span class="tag">气候科学</span>
+                        <span class="tag">地理信息</span>
+                    </div>
+                    <div class="actions">
+                        <button><i class="fas fa-info-circle"></i> 详情</button>
+                        <button class="download-btn"><i class="fas fa-download"></i> 下载</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 动画卡片 5 -->
+            <div class="animation-card">
+                <div class="animation-media">
+                    <video autoplay loop muted playsinline>
+                        <source src="https://assets.codepen.io/3364143/screen.mp4" type="video/mp4">
+                    </video>
+                    <div class="format-badge">MP4</div>
+                </div>
+                <div class="animation-info">
+                    <h3>机器人路径规划算法</h3>
+                    <div class="paper-info">
+                        <i class="fas fa-book"></i>
+                        <span>自主机器人研究 (2023)</span>
+                    </div>
+                    <p class="description">A*算法在复杂环境中的路径规划演示，包含障碍物规避和最优路径搜索过程的可视化。</p>
+                    <div class="tags">
+                        <span class="tag">机器人</span>
+                        <span class="tag">路径规划</span>
+                        <span class="tag">算法</span>
+                    </div>
+                    <div class="actions">
+                        <button><i class="fas fa-info-circle"></i> 详情</button>
+                        <button class="download-btn"><i class="fas fa-download"></i> 下载</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 动画卡片 6 -->
+            <div class="animation-card">
+                <div class="animation-media">
+                    <img src="https://media.giphy.com/media/3o7TKsQ8UQ4l4LhGz6/giphy.gif" alt="量子计算">
+                    <div class="format-badge">GIF</div>
+                </div>
+                <div class="animation-info">
+                    <h3>量子位纠缠可视化</h3>
+                    <div class="paper-info">
+                        <i class="fas fa-book"></i>
+                        <span>量子计算基础 (2023)</span>
+                    </div>
+                    <p class="description">两个量子位之间纠缠态的演变过程，使用Bloch球面展示量子态的概率幅变化。</p>
+                    <div class="tags">
+                        <span class="tag">量子计算</span>
+                        <span class="tag">物理</span>
+                        <span class="tag">新兴技术</span>
+                    </div>
+                    <div class="actions">
+                        <button><i class="fas fa-info-circle"></i> 详情</button>
+                        <button class="download-btn"><i class="fas fa-download"></i> 下载</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- 页脚 -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>关于学术动画库</h3>
+                    <p>我们致力于为学术研究提供高质量的动画资源，帮助研究人员更好地展示和分享他们的研究成果。收录了来自各学科领域的论文动画。</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="#"><i class="fab fa-github"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>快速链接</h3>
+                    <ul class="footer-links">
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> 首页</a></li>
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> 浏览动画</a></li>
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> 上传指南</a></li>
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> 版权政策</a></li>
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> 常见问题</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>资源格式</h3>
+                    <ul class="footer-links">
+                        <li><a href="#"><i class="fas fa-video"></i> MP4 视频</a></li>
+                        <li><a href="#"><i class="fas fa-image"></i> GIF 动画</a></li>
+                        <li><a href="#"><i class="fas fa-code"></i> SVG 动画</a></li>
+                        <li><a href="#"><i class="fas fa-cube"></i> 3D 模型</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>联系我们</h3>
+                    <p><i class="fas fa-envelope"></i> contact@academic-animations.edu</p>
+                    <p><i class="fas fa-phone"></i> +1 (123) 456-7890</p>
+                    <p><i class="fas fa-map-marker-alt"></i> 学术大道123号，研究园区</p>
+                </div>
+            </div>
+            
+            <div class="copyright">
+                <p>&copy; 2023 学术动画库 | 论文动画展示平台 | 保留所有权利</p>
+                <p style="margin-top: 10px;">本网站仅用于学术研究目的</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // 分类按钮交互
+        const categoryBtns = document.querySelectorAll('.category-btn');
+        categoryBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                categoryBtns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                
+                // 模拟分类过滤
+                const category = btn.textContent.trim();
+                alert(`正在显示: ${category} 类别的动画`);
+            });
+        });
+        
+        // 动画卡片悬停效果增强
+        const cards = document.querySelectorAll('.animation-card');
+        cards.forEach(card => {
+            card.addEventListener('mouseenter', () => {
+                card.style.transform = 'translateY(-10px)';
+                card.style.boxShadow = '0 20px 40px rgba(0, 0, 0, 0.15)';
+            });
+            
+            card.addEventListener('mouseleave', () => {
+                card.style.transform = 'translateY(0)';
+                card.style.boxShadow = '0 10px 30px rgba(0, 0, 0, 0.1)';
+            });
+        });
+        
+        // 搜索功能
+        const searchInput = document.querySelector('.search-box input');
+        const searchButton = document.querySelector('.search-box button');
+        
+        searchButton.addEventListener('click', () => {
+            if (searchInput.value.trim() !== '') {
+                alert(`正在搜索: ${searchInput.value}`);
+            }
+        });
+        
+        searchInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                if (searchInput.value.trim() !== '') {
+                    alert(`正在搜索: ${searchInput.value}`);
+                }
+            }
+        });
+        
+        // 上传按钮
+        const uploadBtn = document.querySelector('.upload-btn');
+        uploadBtn.addEventListener('click', () => {
+            alert('打开动画上传界面');
+        });
+        
+        // 下载按钮
+        const downloadBtns = document.querySelectorAll('.download-btn');
+        downloadBtns.forEach(btn => {
+            btn.addEventListener('click', function(e) {
+                e.stopPropagation();
+                const card = this.closest('.animation-card');
+                const title = card.querySelector('h3').textContent;
+                alert(`开始下载: ${title}`);
+            });
+        });
+        
+        // 详情按钮
+        const detailBtns = document.querySelectorAll('.actions button:first-child');
+        detailBtns.forEach(btn => {
+            btn.addEventListener('click', function(e) {
+                e.stopPropagation();
+                const card = this.closest('.animation-card');
+                const title = card.querySelector('h3').textContent;
+                alert(`查看详情: ${title}`);
+            });
+        });
+    </script>
+</body>
+</html>
