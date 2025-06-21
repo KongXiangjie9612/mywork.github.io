@@ -233,6 +233,7 @@
             flex-wrap: wrap;
             gap: 15px;
             margin: 2rem 0;
+            justify-content: center;
         }
         
         .category-btn {
@@ -296,7 +297,7 @@
         }
         
         .animation-card:hover .animation-media video,
-        .animation-card-card:hover .animation-media img {
+        .animation-card:hover .animation-media img {
             transform: scale(1.05);
         }
         
@@ -392,6 +393,29 @@
         
         .actions .download-btn:hover {
             background: #219653;
+        }
+        
+        /* 分类标题 */
+        .category-title {
+            display: flex;
+            align-items: center;
+            margin: 3rem 0 1.5rem;
+            padding-bottom: 15px;
+            border-bottom: 2px solid var(--secondary);
+        }
+        
+        .category-title h2 {
+            color: var(--primary);
+            font-size: 2rem;
+            margin-right: 15px;
+        }
+        
+        .category-title .count-badge {
+            background: var(--secondary);
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 1rem;
         }
         
         /* 页脚 */
@@ -508,6 +532,10 @@
             .hero h2 {
                 font-size: 2.2rem;
             }
+            
+            .category-title h2 {
+                font-size: 1.6rem;
+            }
         }
         
         /* 动画效果 */
@@ -557,10 +585,10 @@
                 <nav>
                     <ul>
                         <li><a href="#" class="active"><i class="fas fa-home"></i> 首页</a></li>
-                        <li><a href="#"><i class="fas fa-folder"></i> 分类浏览</a></li>
-                        <li><a href="#"><i class="fas fa-history"></i> 最近上传</a></li>
-                        <li><a href="#"><i class="fas fa-cloud-upload-alt"></i> 上传动画</a></li>
-                        <li><a href="#"><i class="fas fa-info-circle"></i> 关于</a></li>
+                        <li><a href="#ai-section"><i class="fas fa-brain"></i> AI</a></li>
+                        <li><a href="#bio-section"><i class="fas fa-heartbeat"></i> 生物医学</a></li>
+                        <li><a href="#physics-section"><i class="fas fa-atom"></i> 物理模拟</a></li>
+                        <li><a href="#data-section"><i class="fas fa-chart-bar"></i> 数据可视化</a></li>
                     </ul>
                 </nav>
             </div>
@@ -576,17 +604,17 @@
             <div class="stats">
                 <div class="stat-card">
                     <i class="fas fa-video"></i>
-                    <div class="number">246</div>
+                    <div class="number">168</div>
                     <div class="label">动画文件</div>
                 </div>
                 <div class="stat-card">
                     <i class="fas fa-file-alt"></i>
-                    <div class="number">128</div>
+                    <div class="number">92</div>
                     <div class="label">关联论文</div>
                 </div>
                 <div class="stat-card">
                     <i class="fas fa-users"></i>
-                    <div class="number">3.5K</div>
+                    <div class="number">2.8K</div>
                     <div class="label">访问用户</div>
                 </div>
             </div>
@@ -609,19 +637,22 @@
 
         <!-- 分类导航 -->
         <div class="categories">
-            <button class="category-btn active"><i class="fas fa-layer-group"></i> 全部动画</button>
-            <button class="category-btn"><i class="fas fa-brain"></i> 人工智能</button>
-            <button class="category-btn"><i class="fas fa-eye"></i> 计算机视觉</button>
-            <button class="category-btn"><i class="fas fa-heartbeat"></i> 生物医学</button>
-            <button class="category-btn"><i class="fas fa-atom"></i> 物理模拟</button>
-            <button class="category-btn"><i class="fas fa-chart-bar"></i> 数据可视化</button>
-            <button class="category-btn"><i class="fas fa-robot"></i> 机器学习</button>
+            <button class="category-btn active" data-category="all"><i class="fas fa-layer-group"></i> 全部动画</button>
+            <button class="category-btn" data-category="ai"><i class="fas fa-brain"></i> 人工智能</button>
+            <button class="category-btn" data-category="bio"><i class="fas fa-heartbeat"></i> 生物医学</button>
+            <button class="category-btn" data-category="physics"><i class="fas fa-atom"></i> 物理模拟</button>
+            <button class="category-btn" data-category="data"><i class="fas fa-chart-bar"></i> 数据可视化</button>
         </div>
 
-        <!-- 动画网格 -->
+        <!-- 人工智能分类 -->
+        <div class="category-title" id="ai-section">
+            <h2><i class="fas fa-brain"></i> 人工智能</h2>
+            <div class="count-badge">12 个动画</div>
+        </div>
+        
         <div class="animation-grid">
             <!-- 动画卡片 1 -->
-            <div class="animation-card">
+            <div class="animation-card" data-category="ai">
                 <div class="animation-media">
                     <video autoplay loop muted playsinline>
                         <source src="https://assets.codepen.io/3364143/screen.mp4" type="video/mp4">
@@ -648,7 +679,67 @@
             </div>
 
             <!-- 动画卡片 2 -->
-            <div class="animation-card">
+            <div class="animation-card" data-category="ai">
+                <div class="animation-media">
+                    <img src="https://i.gifer.com/3Q6h.gif" alt="GAN生成对抗网络">
+                    <div class="format-badge">GIF</div>
+                </div>
+                <div class="animation-info">
+                    <h3>GAN生成对抗过程</h3>
+                    <div class="paper-info">
+                        <i class="fas fa-book"></i>
+                        <span>生成模型研究 (2022)</span>
+                    </div>
+                    <p class="description">展示生成对抗网络训练过程中生成器和判别器的动态博弈过程。</p>
+                    <div class="tags">
+                        <span class="tag">生成模型</span>
+                        <span class="tag">GAN</span>
+                        <span class="tag">机器学习</span>
+                    </div>
+                    <div class="actions">
+                        <button><i class="fas fa-info-circle"></i> 详情</button>
+                        <button class="download-btn"><i class="fas fa-download"></i> 下载</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 动画卡片 3 -->
+            <div class="animation-card" data-category="ai">
+                <div class="animation-media">
+                    <video autoplay loop muted playsinline>
+                        <source src="https://assets.codepen.io/3364143/screen.mp4" type="video/mp4">
+                    </video>
+                    <div class="format-badge">MP4</div>
+                </div>
+                <div class="animation-info">
+                    <h3>注意力机制可视化</h3>
+                    <div class="paper-info">
+                        <i class="fas fa-book"></i>
+                        <span>Transformer模型研究 (2023)</span>
+                    </div>
+                    <p class="description">展示Transformer模型中自注意力机制如何聚焦于输入序列的不同部分。</p>
+                    <div class="tags">
+                        <span class="tag">NLP</span>
+                        <span class="tag">Transformer</span>
+                        <span class="tag">注意力机制</span>
+                    </div>
+                    <div class="actions">
+                        <button><i class="fas fa-info-circle"></i> 详情</button>
+                        <button class="download-btn"><i class="fas fa-download"></i> 下载</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 生物医学分类 -->
+        <div class="category-title" id="bio-section">
+            <h2><i class="fas fa-heartbeat"></i> 生物医学</h2>
+            <div class="count-badge">9 个动画</div>
+        </div>
+        
+        <div class="animation-grid">
+            <!-- 动画卡片 4 -->
+            <div class="animation-card" data-category="bio">
                 <div class="animation-media">
                     <img src="https://media.giphy.com/media/3o7TKwxYkeW0ZvTqsU/giphy.gif" alt="分子动力学模拟">
                     <div class="format-badge">GIF</div>
@@ -672,8 +763,68 @@
                 </div>
             </div>
 
-            <!-- 动画卡片 3 -->
-            <div class="animation-card">
+            <!-- 动画卡片 5 -->
+            <div class="animation-card" data-category="bio">
+                <div class="animation-media">
+                    <video autoplay loop muted playsinline>
+                        <source src="https://assets.codepen.io/3364143/screen.mp4" type="video/mp4">
+                    </video>
+                    <div class="format-badge">MP4</div>
+                </div>
+                <div class="animation-info">
+                    <h3>DNA复制过程</h3>
+                    <div class="paper-info">
+                        <i class="fas fa-book"></i>
+                        <span>分子生物学研究 (2023)</span>
+                    </div>
+                    <p class="description">展示DNA双螺旋解旋和复制的详细过程，包括引物结合和链延伸。</p>
+                    <div class="tags">
+                        <span class="tag">遗传学</span>
+                        <span class="tag">DNA</span>
+                        <span class="tag">细胞生物学</span>
+                    </div>
+                    <div class="actions">
+                        <button><i class="fas fa-info-circle"></i> 详情</button>
+                        <button class="download-btn"><i class="fas fa-download"></i> 下载</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 动画卡片 6 -->
+            <div class="animation-card" data-category="bio">
+                <div class="animation-media">
+                    <img src="https://i.gifer.com/76h0.gif" alt="病毒入侵机制">
+                    <div class="format-badge">GIF</div>
+                </div>
+                <div class="animation-info">
+                    <h3>病毒入侵细胞机制</h3>
+                    <div class="paper-info">
+                        <i class="fas fa-book"></i>
+                        <span>病毒学研究 (2023)</span>
+                    </div>
+                    <p class="description">展示病毒如何识别宿主细胞表面受体并进入细胞的过程。</p>
+                    <div class="tags">
+                        <span class="tag">病毒学</span>
+                        <span class="tag">细胞生物学</span>
+                        <span class="tag">免疫学</span>
+                    </div>
+                    <div class="actions">
+                        <button><i class="fas fa-info-circle"></i> 详情</button>
+                        <button class="download-btn"><i class="fas fa-download"></i> 下载</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 物理模拟分类 -->
+        <div class="category-title" id="physics-section">
+            <h2><i class="fas fa-atom"></i> 物理模拟</h2>
+            <div class="count-badge">7 个动画</div>
+        </div>
+        
+        <div class="animation-grid">
+            <!-- 动画卡片 7 -->
+            <div class="animation-card" data-category="physics">
                 <div class="animation-media">
                     <video autoplay loop muted playsinline>
                         <source src="https://assets.codepen.io/3364143/screen.mp4" type="video/mp4">
@@ -699,8 +850,68 @@
                 </div>
             </div>
 
-            <!-- 动画卡片 4 -->
-            <div class="animation-card">
+            <!-- 动画卡片 8 -->
+            <div class="animation-card" data-category="physics">
+                <div class="animation-media">
+                    <img src="https://i.gifer.com/embedded/download/7XcA.gif" alt="量子纠缠">
+                    <div class="format-badge">GIF</div>
+                </div>
+                <div class="animation-info">
+                    <h3>量子纠缠可视化</h3>
+                    <div class="paper-info">
+                        <i class="fas fa-book"></i>
+                        <span>量子物理研究 (2023)</span>
+                    </div>
+                    <p class="description">展示两个量子位之间纠缠态的演变过程及其在量子计算中的应用。</p>
+                    <div class="tags">
+                        <span class="tag">量子物理</span>
+                        <span class="tag">量子计算</span>
+                        <span class="tag">新兴技术</span>
+                    </div>
+                    <div class="actions">
+                        <button><i class="fas fa-info-circle"></i> 详情</button>
+                        <button class="download-btn"><i class="fas fa-download"></i> 下载</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 动画卡片 9 -->
+            <div class="animation-card" data-category="physics">
+                <div class="animation-media">
+                    <video autoplay loop muted playsinline>
+                        <source src="https://assets.codepen.io/3364143/screen.mp4" type="video/mp4">
+                    </video>
+                    <div class="format-badge">MP4</div>
+                </div>
+                <div class="animation-info">
+                    <h3>引力透镜效应模拟</h3>
+                    <div class="paper-info">
+                        <i class="fas fa-book"></i>
+                        <span>天体物理学研究 (2022)</span>
+                    </div>
+                    <p class="description">展示大质量天体如何弯曲周围时空并导致光线弯曲的引力透镜效应。</p>
+                    <div class="tags">
+                        <span class="tag">天体物理</span>
+                        <span class="tag">相对论</span>
+                        <span class="tag">宇宙学</span>
+                    </div>
+                    <div class="actions">
+                        <button><i class="fas fa-info-circle"></i> 详情</button>
+                        <button class="download-btn"><i class="fas fa-download"></i> 下载</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 数据可视化分类 -->
+        <div class="category-title" id="data-section">
+            <h2><i class="fas fa-chart-bar"></i> 数据可视化</h2>
+            <div class="count-badge">11 个动画</div>
+        </div>
+        
+        <div class="animation-grid">
+            <!-- 动画卡片 10 -->
+            <div class="animation-card" data-category="data">
                 <div class="animation-media">
                     <img src="https://media.giphy.com/media/3o7TKsQ8UQ4l4LhGz6/giphy.gif" alt="数据可视化">
                     <div class="format-badge">GIF</div>
@@ -724,8 +935,8 @@
                 </div>
             </div>
 
-            <!-- 动画卡片 5 -->
-            <div class="animation-card">
+            <!-- 动画卡片 11 -->
+            <div class="animation-card" data-category="data">
                 <div class="animation-media">
                     <video autoplay loop muted playsinline>
                         <source src="https://assets.codepen.io/3364143/screen.mp4" type="video/mp4">
@@ -733,16 +944,16 @@
                     <div class="format-badge">MP4</div>
                 </div>
                 <div class="animation-info">
-                    <h3>机器人路径规划算法</h3>
+                    <h3>COVID-19传播动态</h3>
                     <div class="paper-info">
                         <i class="fas fa-book"></i>
-                        <span>自主机器人研究 (2023)</span>
+                        <span>流行病学研究 (2023)</span>
                     </div>
-                    <p class="description">A*算法在复杂环境中的路径规划演示，包含障碍物规避和最优路径搜索过程的可视化。</p>
+                    <p class="description">展示COVID-19在全球范围内的传播动态和感染率变化趋势。</p>
                     <div class="tags">
-                        <span class="tag">机器人</span>
-                        <span class="tag">路径规划</span>
-                        <span class="tag">算法</span>
+                        <span class="tag">流行病学</span>
+                        <span class="tag">数据可视化</span>
+                        <span class="tag">公共卫生</span>
                     </div>
                     <div class="actions">
                         <button><i class="fas fa-info-circle"></i> 详情</button>
@@ -751,23 +962,23 @@
                 </div>
             </div>
 
-            <!-- 动画卡片 6 -->
-            <div class="animation-card">
+            <!-- 动画卡片 12 -->
+            <div class="animation-card" data-category="data">
                 <div class="animation-media">
-                    <img src="https://github.com/KongXiangjie9612/mywork.github.io/blob/main/annotation/phase_portrait_z1_dz1.mp4" alt="error">
-                    <div class="format-badge">MP4</div>
+                    <img src="https://i.gifer.com/embedded/download/7XcA.gif" alt="网络流量">
+                    <div class="format-badge">GIF</div>
                 </div>
                 <div class="animation-info">
-                    <h3>Bias Sliding Surface Visualization</h3>
+                    <h3>互联网流量可视化</h3>
                     <div class="paper-info">
                         <i class="fas fa-book"></i>
-                        <span>Compliant control</span>
+                        <span>网络科学研究 (2023)</span>
                     </div>
-                    <p class="description">The phase portrait of all states</p>
+                    <p class="description">全球互联网流量动态可视化，展示不同区域间的数据传输路径和流量强度。</p>
                     <div class="tags">
-                        <span class="tag">RISE Control</span>
-                        <span class="tag">Adaptive jerk</span>
-                        <span class="tag">Impedance control</span>
+                        <span class="tag">网络科学</span>
+                        <span class="tag">数据可视化</span>
+                        <span class="tag">通信技术</span>
                     </div>
                     <div class="actions">
                         <button><i class="fas fa-info-circle"></i> 详情</button>
@@ -797,10 +1008,10 @@
                     <h3>快速链接</h3>
                     <ul class="footer-links">
                         <li><a href="#"><i class="fas fa-chevron-right"></i> 首页</a></li>
-                        <li><a href="#"><i class="fas fa-chevron-right"></i> 浏览动画</a></li>
-                        <li><a href="#"><i class="fas fa-chevron-right"></i> 上传指南</a></li>
-                        <li><a href="#"><i class="fas fa-chevron-right"></i> 版权政策</a></li>
-                        <li><a href="#"><i class="fas fa-chevron-right"></i> 常见问题</a></li>
+                        <li><a href="#ai-section"><i class="fas fa-brain"></i> AI分类</a></li>
+                        <li><a href="#bio-section"><i class="fas fa-heartbeat"></i> 生物医学</a></li>
+                        <li><a href="#physics-section"><i class="fas fa-atom"></i> 物理模拟</a></li>
+                        <li><a href="#data-section"><i class="fas fa-chart-bar"></i> 数据可视化</a></li>
                     </ul>
                 </div>
                 
@@ -832,20 +1043,45 @@
     <script>
         // 分类按钮交互
         const categoryBtns = document.querySelectorAll('.category-btn');
+        const animationCards = document.querySelectorAll('.animation-card');
+        
         categoryBtns.forEach(btn => {
             btn.addEventListener('click', () => {
+                // 更新按钮状态
                 categoryBtns.forEach(b => b.classList.remove('active'));
                 btn.classList.add('active');
                 
-                // 模拟分类过滤
-                const category = btn.textContent.trim();
-                alert(`正在显示: ${category} 类别的动画`);
+                // 获取分类
+                const category = btn.getAttribute('data-category');
+                
+                // 处理滚动到特定分类
+                if(category !== 'all') {
+                    const sectionId = category + '-section';
+                    document.getElementById(sectionId).scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+                
+                // 显示/隐藏卡片
+                if (category === 'all') {
+                    animationCards.forEach(card => {
+                        card.style.display = 'flex';
+                    });
+                } else {
+                    animationCards.forEach(card => {
+                        if (card.getAttribute('data-category') === category) {
+                            card.style.display = 'flex';
+                        } else {
+                            card.style.display = 'none';
+                        }
+                    });
+                }
             });
         });
         
         // 动画卡片悬停效果增强
-        const cards = document.querySelectorAll('.animation-card');
-        cards.forEach(card => {
+        animationCards.forEach(card => {
             card.addEventListener('mouseenter', () => {
                 card.style.transform = 'translateY(-10px)';
                 card.style.boxShadow = '0 20px 40px rgba(0, 0, 0, 0.15)';
@@ -900,6 +1136,19 @@
                 const card = this.closest('.animation-card');
                 const title = card.querySelector('h3').textContent;
                 alert(`查看详情: ${title}`);
+            });
+        });
+        
+        // 平滑滚动导航
+        document.querySelectorAll('nav a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href');
+                if(targetId !== '#') {
+                    document.querySelector(targetId).scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                }
             });
         });
     </script>
